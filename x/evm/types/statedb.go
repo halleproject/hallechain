@@ -1,6 +1,7 @@
 package types
 
 import (
+	"encoding/json"
 	"fmt"
 	"math/big"
 	"sort"
@@ -171,6 +172,13 @@ func (csdb *CommitStateDB) SetLogs(hash ethcmn.Hash, logs []*ethtypes.Log) error
 		return nil
 	}
 
+	jsonLogs, err := json.Marshal(logs)
+	if err != nil {
+		csdb.ctx.Logger().Info("SetLogs into db", "hash", hash.String(), "logs json.Marshal err ", err.Error())
+	} else {
+		csdb.ctx.Logger().Info("SetLogs into db", "hash", hash.String(), "logs", string(jsonLogs))
+	}
+
 	store.Set(LogsKey(hash[:]), enc)
 	return nil
 }
@@ -185,6 +193,14 @@ func (csdb *CommitStateDB) AddLog(log *ethtypes.Log) {
 	log.Index = csdb.logSize
 	csdb.logs[csdb.thash] = append(csdb.logs[csdb.thash], log)
 	csdb.logSize++
+
+	jsonLogs, err := json.Marshal(csdb.logs[csdb.thash])
+	if err != nil {
+		csdb.ctx.Logger().Info("AddLog", "hash", csdb.thash.String(), "logs json.Marshal err ", err.Error())
+	} else {
+		csdb.ctx.Logger().Info("AddLog", "hash", csdb.thash.String(), "csdb.logs[csdb.thash]", string(jsonLogs))
+	}
+
 }
 
 // AddPreimage records a SHA3 preimage seen by the VM.
@@ -309,6 +325,14 @@ func (csdb *CommitStateDB) GetCommittedState(addr ethcmn.Address, hash ethcmn.Ha
 // GetLogs returns the current logs for a given transaction hash from the KVStore.
 func (csdb *CommitStateDB) GetLogs(hash ethcmn.Hash) ([]*ethtypes.Log, error) {
 	if csdb.logs[hash] != nil {
+
+		jsonLogs, err := json.Marshal(csdb.logs[hash])
+		if err != nil {
+			csdb.ctx.Logger().Info("GetLogs from csdb.logs", "hash", hash.String(), "logs json.Marshal err ", err.Error())
+		} else {
+			csdb.ctx.Logger().Info("GetLogs from csdb.logs", "hash", hash.String(), "csdb.logs[hash]  logs", string(jsonLogs))
+		}
+
 		return csdb.logs[hash], nil
 	}
 
@@ -320,7 +344,19 @@ func (csdb *CommitStateDB) GetLogs(hash ethcmn.Hash) ([]*ethtypes.Log, error) {
 		return []*ethtypes.Log{}, nil
 	}
 
-	return DecodeLogs(encLogs)
+	logs, err := DecodeLogs(encLogs)
+	if err != nil {
+		return nil, err
+	}
+
+	jsonLogs, err := json.Marshal(logs)
+	if err != nil {
+		csdb.ctx.Logger().Info("GetLogs from db", "hash", hash.String(), "logs json.Marshal err ", err.Error())
+	} else {
+		csdb.ctx.Logger().Info("GetLogs from db", "hash", hash.String(), "logs", string(jsonLogs))
+	}
+
+	return logs, nil
 }
 
 // AllLogs returns all the current logs in the state.
