@@ -10,6 +10,7 @@ import (
 	emint "github.com/cosmos/ethermint/types"
 	"github.com/cosmos/ethermint/x/evm/types"
 
+	proto "github.com/gogo/protobuf/proto"
 	tmtypes "github.com/tendermint/tendermint/types"
 )
 
@@ -121,6 +122,9 @@ func handleMsgEthereumTx(ctx sdk.Context, k Keeper, msg types.MsgEthereumTx) (*s
 
 	// set the events to the result
 	executionResult.Result.Events = ctx.EventManager().Events().ToABCIEvents()
+
+	ctx.Logger().Info("handleMsgEthereumTx", "result", proto.CompactTextString(executionResult.Result))
+
 	return executionResult.Result, nil
 }
 
@@ -216,5 +220,8 @@ func handleMsgEthermint(ctx sdk.Context, k Keeper, msg types.MsgEthermint) (*sdk
 
 	// set the events to the result
 	executionResult.Result.Events = ctx.EventManager().Events().ToABCIEvents()
+
+	ctx.Logger().Info("handleMsgEthermint", "result", proto.CompactTextString(executionResult.Result))
+
 	return executionResult.Result, nil
 }
