@@ -1,0 +1,321 @@
+{
+  "genesis_time": "2020-05-25T16:19:43.070635956Z",
+  "chain_id": "8",
+  "consensus_params": {
+    "block": {
+      "max_bytes": "22020096",
+      "max_gas": "-1",
+      "time_iota_ms": "1000"
+    },
+    "evidence": {
+      "max_age_num_blocks": "100000",
+      "max_age_duration": "172800000000000"
+    },
+    "validator": {
+      "pub_key_types": [
+        "ed25519"
+      ]
+    }
+  },
+  "app_hash": "",
+  "app_state": {
+    "slashing": {
+      "params": {
+        "signed_blocks_window": "100",
+        "min_signed_per_window": "0.500000000000000000",
+        "downtime_jail_duration": "600000000000",
+        "slash_fraction_double_sign": "0.050000000000000000",
+        "slash_fraction_downtime": "0.010000000000000000"
+      },
+      "signing_infos": {},
+      "missed_blocks": {}
+    },
+    "supply": {
+      "supply": []
+    },
+    "bank": {
+      "send_enabled": true,
+      "balances": [
+        {
+          "address": "halle1pgycp6fmcztftlhmlunu2nt6qls689tzk3ntlw",
+          "coins": [
+            {
+              "denom": "hale",
+              "amount": "1000000000000000000"
+            }
+          ]
+        },
+        {
+          "address": "halle1vs8dglkv0qhsz4gk5g5kft5e08pd645dkla0u2",
+          "coins": [
+            {
+              "denom": "hale",
+              "amount": "1000000000000000000"
+            }
+          ]
+        },
+        {
+          "address": "halle1cwvpndgykxzkqfsmd89pwuqv8cykehlcjwhnq8",
+          "coins": [
+            {
+              "denom": "hale",
+              "amount": "1000000000000000000"
+            }
+          ]
+        }
+      ]
+    },
+    "auth": {
+      "params": {
+        "max_memo_characters": "256",
+        "tx_sig_limit": "7",
+        "tx_size_cost_per_byte": "10",
+        "sig_verify_cost_ed25519": "590",
+        "sig_verify_cost_secp256k1": "1000"
+      },
+      "accounts": [
+        {
+          "type": "ethermint/EthAccount",
+          "value": {
+            "address": "halle1vs8dglkv0qhsz4gk5g5kft5e08pd645dkla0u2",
+            "coins": [],
+            "public_key": null,
+            "account_number": 0,
+            "sequence": 0,
+            "code_hash": "c5d2460186f7233c927e7db2dcc703c0e500b653ca82273b7bfad8045d85a470"
+          }
+        },
+        {
+          "type": "ethermint/EthAccount",
+          "value": {
+            "address": "halle1pgycp6fmcztftlhmlunu2nt6qls689tzk3ntlw",
+            "coins": [],
+            "public_key": null,
+            "account_number": 0,
+            "sequence": 0,
+            "code_hash": "c5d2460186f7233c927e7db2dcc703c0e500b653ca82273b7bfad8045d85a470"
+          }
+        },
+        {
+          "type": "ethermint/EthAccount",
+          "value": {
+            "address": "halle1cwvpndgykxzkqfsmd89pwuqv8cykehlcjwhnq8",
+            "coins": [],
+            "public_key": null,
+            "account_number": 0,
+            "sequence": 0,
+            "code_hash": "c5d2460186f7233c927e7db2dcc703c0e500b653ca82273b7bfad8045d85a470"
+          }
+        }
+      ]
+    },
+    "mint": {
+      "minter": {
+        "inflation": "0.130000000000000000",
+        "annual_provisions": "0.000000000000000000"
+      },
+      "params": {
+        "mint_denom": "hale",
+        "inflation_rate_change": "0.130000000000000000",
+        "inflation_max": "0.200000000000000000",
+        "inflation_min": "0.070000000000000000",
+        "goal_bonded": "0.670000000000000000",
+        "blocks_per_year": "6311520"
+      }
+    },
+    "gov": {
+      "starting_proposal_id": "1",
+      "deposits": null,
+      "votes": null,
+      "proposals": null,
+      "deposit_params": {
+        "min_deposit": [
+          {
+            "denom": "hale",
+            "amount": "10000000"
+          }
+        ],
+        "max_deposit_period": "172800000000000"
+      },
+      "voting_params": {
+        "voting_period": "172800000000000"
+      },
+      "tally_params": {
+        "quorum": "0.334000000000000000",
+        "threshold": "0.500000000000000000",
+        "veto": "0.334000000000000000"
+      }
+    },
+    "crisis": {
+      "constant_fee": {
+        "denom": "hale",
+        "amount": "1000"
+      }
+    },
+    "distribution": {
+      "params": {
+        "community_tax": "0.020000000000000000",
+        "base_proposer_reward": "0.010000000000000000",
+        "bonus_proposer_reward": "0.040000000000000000",
+        "withdraw_addr_enabled": true
+      },
+      "fee_pool": {
+        "community_pool": []
+      },
+      "delegator_withdraw_infos": [],
+      "previous_proposer": "",
+      "outstanding_rewards": [],
+      "validator_accumulated_commissions": [],
+      "validator_historical_rewards": [],
+      "validator_current_rewards": [],
+      "delegator_starting_infos": [],
+      "validator_slash_events": []
+    },
+    "genutil": {
+      "gentxs": [
+        {
+          "type": "cosmos-sdk/StdTx",
+          "value": {
+            "msg": [
+              {
+                "type": "cosmos-sdk/MsgCreateValidator",
+                "value": {
+                  "description": {
+                    "moniker": "node0"
+                  },
+                  "commission": {
+                    "rate": "0.100000000000000000",
+                    "max_rate": "0.200000000000000000",
+                    "max_change_rate": "0.010000000000000000"
+                  },
+                  "min_self_delegation": "1",
+                  "delegator_address": "halle1vs8dglkv0qhsz4gk5g5kft5e08pd645dkla0u2",
+                  "validator_address": "hallevaloper1vs8dglkv0qhsz4gk5g5kft5e08pd645dh9g48t",
+                  "pubkey": "hallevalconspub1zcjduepqf5wpw4mnzxv63dp34mxzsz6jhefcw9lv0gl20t4p3r5m9nwjaz0q6w48se",
+                  "value": {
+                    "denom": "hale",
+                    "amount": "100000000"
+                  }
+                }
+              }
+            ],
+            "fee": {
+              "amount": [],
+              "gas": "200000"
+            },
+            "signatures": [
+              {
+                "public_key": "8WWOMkEEXvXrXvdZVAFfjy6UGkVjN4t3/jWuvo707gNJC6Pfdrs3iwih5/t/FONA77tD8qS1G18K3hsvP+t0Geq1r09Nsw==",
+                "signature": "ELMeYIcUGHJi/jXJeo5hnA5zl4SID6p63YHnTHaqmhQc0wY/daUEMhTcPpBI88Ohpl/FpTVJhpaTjDoIBoMtHgA="
+              }
+            ],
+            "memo": "2365f70a3a54fbf4fda39a8d62e718bbe782d32c@192.168.20.2:26656"
+          }
+        },
+	{
+          "type": "cosmos-sdk/StdTx",
+          "value": {
+            "msg": [
+              {
+                "type": "cosmos-sdk/MsgCreateValidator",
+                "value": {
+                  "description": {
+                    "moniker": "node1"
+                  },
+                  "commission": {
+                    "rate": "0.100000000000000000",
+                    "max_rate": "0.200000000000000000",
+                    "max_change_rate": "0.010000000000000000"
+                  },
+                  "min_self_delegation": "1",
+                  "delegator_address": "halle1pgycp6fmcztftlhmlunu2nt6qls689tzk3ntlw",
+                  "validator_address": "hallevaloper1pgycp6fmcztftlhmlunu2nt6qls689tzhtx3y0",
+                  "pubkey": "hallevalconspub1zcjduepq5wpyahr3yqyzjn3cu2pc7sc9ashmgsuz5zlq2tuactaamz2q5unsewztx5",
+                  "value": {
+                    "denom": "hale",
+                    "amount": "100000000"
+                  }
+                }
+              }
+            ],
+            "fee": {
+              "amount": [],
+              "gas": "200000"
+            },
+            "signatures": [
+              {
+                "public_key": "8WWOMkEE9jMkjVPjf9hyMuP5IqEKznys5dfym1zRmz9YQM1/V6TWTukndNT9WDPjUzQIZos1vhidt2gKiUmQQSNwq2AopA==",
+                "signature": "luY1bSNXZCFivzZfjjysof0M1GLgRv1ih8R08nI/0vgawAXGfsqU6ylztWZKGDwI7ahh05nDjgUEizM6BFSOOwE="
+              }
+            ],
+            "memo": "d2a99231f54573b055388965fbdb1e43ce9d7913@192.168.20.3:26656"
+          }
+        },
+	{
+          "type": "cosmos-sdk/StdTx",
+          "value": {
+            "msg": [
+              {
+                "type": "cosmos-sdk/MsgCreateValidator",
+                "value": {
+                  "description": {
+                    "moniker": "node2"
+                  },
+                  "commission": {
+                    "rate": "0.100000000000000000",
+                    "max_rate": "0.200000000000000000",
+                    "max_change_rate": "0.010000000000000000"
+                  },
+                  "min_self_delegation": "1",
+                  "delegator_address": "halle1cwvpndgykxzkqfsmd89pwuqv8cykehlcjwhnq8",
+                  "validator_address": "hallevaloper1cwvpndgykxzkqfsmd89pwuqv8cykehlcn5zfmx",
+                  "pubkey": "hallevalconspub1zcjduepqp3ks3nnfcey2cw73myp2xsvuktg2wx8xn6v4mcj83v7z0z75p9usz89axj",
+                  "value": {
+                    "denom": "hale",
+                    "amount": "100000000"
+                  }
+                }
+              }
+            ],
+            "fee": {
+              "amount": [],
+              "gas": "200000"
+            },
+            "signatures": [
+              {
+                "public_key": "8WWOMkEES9X+jbPEr5GdaHRHbdP39vp4sTUTiI7EzlX7du+nEyytE+WoPf0h/WlSnnxT3LK1x8KltdRQsumRpldmwCGwwA==",
+                "signature": "LDNA08cKEHAq1VAlUfTPzb5OlawIadsoMB4u5VtggFp0yHCSmAZDk/KOVrmemFEnhrcYyWN3GHvOM/fm3ZrK3QA="
+              }
+            ],
+            "memo": "8c3c43997d7c76d01eac12bab5fa77d9f6bec0d5@192.168.20.4:26656"
+          }
+        }
+      ]
+    },
+    "staking": {
+      "params": {
+        "unbonding_time": "1814400000000000",
+        "max_validators": 100,
+        "max_entries": 7,
+        "bond_denom": "hale"
+      },
+      "last_total_power": "0",
+      "last_validator_powers": null,
+      "validators": null,
+      "delegations": null,
+      "unbonding_delegations": null,
+      "redelegations": null,
+      "exported": false
+    },
+    "params": null,
+    "evm": {
+      "accounts": []
+    },
+    "evidence": {
+      "params": {
+        "max_evidence_age": "120000000000"
+      },
+      "evidence": []
+    }
+  }
+}
