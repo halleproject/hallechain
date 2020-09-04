@@ -1,0 +1,115 @@
+version: '2'
+
+services:
+  node0:
+    container_name: node0
+    image: ubuntu:16.04
+    ports:
+    - "26001-26002:26656-26657"
+    volumes:
+    - ./build:/home
+    command: /bin/bash -c 'cd /home/ && ./halled start    --minimum-gas-prices  5.0uhale   --home node0 --log_level "main:info,state:info,mempool:info"  --rpc.laddr "tcp://0.0.0.0:26657" >> node0.log'
+    networks:
+      localnet:
+        ipv4_address: 192.168.20.2
+
+  node1:
+    container_name: node1
+    image: ubuntu:16.04
+    ports:
+    - "26011-26012:26656-26657"
+    volumes:
+    - ./build:/home
+    command: /bin/bash -c 'cd /home/ && ./halled start  --minimum-gas-prices  5.0uhale   --home node1 --log_level "main:info,state:info,mempool:info" >> node1.log '
+    networks:
+      localnet:
+        ipv4_address: 192.168.20.3
+
+  node2:
+    container_name: node2
+    image: ubuntu:16.04
+    ports:
+    - "26021-26022:26656-26657"
+    volumes:
+    - ./build:/home
+    command: /bin/bash -c 'cd /home/ && ./halled start    --minimum-gas-prices  5.0uhale   --home node2 --log_level "main:info,state:info,mempool:info" >> node2.log '
+    networks:
+      localnet:
+        ipv4_address: 192.168.20.4
+  node3:
+    container_name: node3
+    image: ubuntu:16.04
+    ports:
+    - "26031-26032:26656-26657"
+    volumes:
+    - ./build:/home
+    command: /bin/bash -c 'cd /home/ && ./halled start   --minimum-gas-prices  5.0uhale   --home node3 --log_level info >> node3.log '
+    networks:
+      localnet:
+        ipv4_address: 192.168.20.5
+  node4:
+    container_name: node4
+    image: ubuntu:16.04
+    ports:
+    - "26041-26042:26656-26657"
+    volumes:
+    - ./build:/home
+    command: /bin/bash -c 'cd /home/ && ./halled start  --minimum-gas-prices  5.0uhale   --home node4 --log_level info  >> node4.log '
+    networks:
+      localnet:
+        ipv4_address: 192.168.20.6
+
+  node5:
+    container_name: node5
+    image: ubuntu:16.04
+    ports:
+    - "26051-26052:26656-26657"
+    volumes:
+    - ./build:/home
+    command: /bin/bash -c 'cd /home/ && ./halled start    --minimum-gas-prices  5.0uhale   --home node5 --log_level info >> node5.log  '
+    networks:
+      localnet:
+        ipv4_address: 192.168.20.7
+  node6:
+    container_name: node6
+    image: ubuntu:16.04
+    ports:
+    - "26061-26062:26656-26657"
+    volumes:
+    - ./build:/home
+    command: /bin/bash -c 'cd /home/ && ./halled start   --minimum-gas-prices  5.0uhale   --home node6 --log_level info >> node6.log '
+    networks:
+      localnet:
+        ipv4_address: 192.168.20.8
+  node7:
+    container_name: node7
+    image: ubuntu:16.04
+    ports:
+    - "26071-26072:26656-26657"
+    volumes:
+    - ./build:/home
+    command: /bin/bash -c 'cd /home/ && ./halled start   --minimum-gas-prices  5.0uhale   --home node7 --log_level info  >> node7.log'
+    networks:
+      localnet:
+        ipv4_address: 192.168.20.9
+  node8:
+    container_name: node8
+    image: ubuntu:16.04
+    ports:
+    - "26656-26657:26656-26657"
+    - "8545:8545"
+    volumes:
+    - ./build:/home
+    command: /bin/bash -c 'cd /home/ && ./halled start   --minimum-gas-prices  5.0uhale   --home node8 --log_level "main:info,state:info,mempool:info"  --rpc.laddr "tcp://0.0.0.0:26657" >> node8.log '
+    networks:
+      localnet:
+        ipv4_address: 192.168.20.10
+
+networks:
+  localnet:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+      -
+        subnet: 192.168.20.0/24
