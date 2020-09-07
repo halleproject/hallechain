@@ -37,13 +37,20 @@ func NewKeeper(
 	cdc *codec.Codec, blockKey, codeKey, storeKey sdk.StoreKey,
 	ak types.AccountKeeper, bk types.BankKeeper,
 ) Keeper {
-	return Keeper{
-		cdc:           cdc,
-		blockKey:      blockKey,
-		CommitStateDB: types.NewCommitStateDB(sdk.Context{}, codeKey, storeKey, ak, bk),
-		TxCount:       0,
-		Bloom:         big.NewInt(0),
+	k := Keeper{
+		cdc:      cdc,
+		blockKey: blockKey,
+		//CommitStateDB: types.NewCommitStateDB(sdk.Context{}, codeKey, storeKey, ak, bk),
+		TxCount: 0,
+		Bloom:   big.NewInt(0),
 	}
+
+	ethlogs := k.AllTransactionLogs(sdk.Context{})
+
+	k.CommitStateDB = types.NewCommitStateDB(sdk.Context{}, codeKey, storeKey, ak, bk, uint(len(ethlogs)))
+
+	return k
+
 }
 
 // Logger returns a module-specific logger.
@@ -120,6 +127,36 @@ func (k *Keeper) GetTransactionLogs(ctx sdk.Context, hash []byte) ([]*ethtypes.L
 	}
 
 	return types.DecodeLogs(encLogs)
+}
+
+func (k *Keeper) AllTransactionLogs(ctx sdk.Context) []*ethtypes.Log {
+
+	store := ctx.KVStore(k.blockKey)
+	iterator := sdk.KVStorePrefixIterator(store, nil)
+	defer iterator.Close()
+
+	allLogs := []*ethtypes.Log{}
+	for ; iterator.Valid(); iterator.Next() {
+		//logs := types.DecodeLogs(iterator.Value())
+		var logs []*ethtypes.Log
+		k.cdc.MustUnmarshalBinaryLengthPrefixed(iterator.Value(), &logs)
+		allLogs = append(allLogs, logs...)
+	}
+
+	return allLogs
+
+	// store := csdb.ctx.KVStore(csdb.storeKey)
+	// iterator := sdk.KVStorePrefixIterator(store, KeyPrefixLogs)
+	// defer iterator.Close()
+	//
+	// allLogs := []*ethtypes.Log{}
+	// for ; iterator.Valid(); iterator.Next() {
+	// 	var logs []*ethtypes.Log
+	// 	ModuleCdc.MustUnmarshalBinaryLengthPrefixed(iterator.Value(), &logs)
+	// 	allLogs = append(allLogs, logs...)
+	// }
+	//
+	// return allLogs
 }
 
 // ----------------------------------------------------------------------------

@@ -86,7 +86,7 @@ type CommitStateDB struct {
 // CONTRACT: Stores used for state must be cache-wrapped as the ordering of the
 // key/value space matters in determining the merkle root.
 func NewCommitStateDB(
-	ctx sdk.Context, codeKey, storeKey sdk.StoreKey, ak AccountKeeper, bk BankKeeper,
+	ctx sdk.Context, codeKey, storeKey sdk.StoreKey, ak AccountKeeper, bk BankKeeper, logsize uint,
 ) *CommitStateDB {
 
 	csdb := &CommitStateDB{
@@ -100,10 +100,8 @@ func NewCommitStateDB(
 		logs:              make(map[ethcmn.Hash][]*ethtypes.Log),
 		preimages:         make(map[ethcmn.Hash][]byte),
 		journal:           newJournal(),
+		logSize:           logsize,
 	}
-
-	csdb.logSize = uint(len(csdb.AllLogs()))
-
 	return csdb
 }
 
