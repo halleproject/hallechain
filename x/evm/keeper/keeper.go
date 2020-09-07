@@ -38,16 +38,12 @@ func NewKeeper(
 	ak types.AccountKeeper, bk types.BankKeeper,
 ) Keeper {
 	k := Keeper{
-		cdc:      cdc,
-		blockKey: blockKey,
-		//CommitStateDB: types.NewCommitStateDB(sdk.Context{}, codeKey, storeKey, ak, bk),
-		TxCount: 0,
-		Bloom:   big.NewInt(0),
+		cdc:           cdc,
+		blockKey:      blockKey,
+		CommitStateDB: types.NewCommitStateDB(sdk.Context{}, blockKey, codeKey, storeKey, ak, bk),
+		TxCount:       0,
+		Bloom:         big.NewInt(0),
 	}
-
-	ethlogs := k.AllTransactionLogs(sdk.Context{})
-
-	k.CommitStateDB = types.NewCommitStateDB(sdk.Context{}, codeKey, storeKey, ak, bk, uint(len(ethlogs)))
 
 	return k
 

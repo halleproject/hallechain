@@ -39,8 +39,8 @@ type CommitStateDB struct {
 	// TODO: We need to store the context as part of the structure itself opposed
 	// to being passed as a parameter (as it should be) in order to implement the
 	// StateDB interface. Perhaps there is a better way.
-	ctx sdk.Context
-
+	ctx           sdk.Context
+	blockKey      sdk.StoreKey
 	codeKey       sdk.StoreKey
 	storeKey      sdk.StoreKey // i.e storage key
 	accountKeeper AccountKeeper
@@ -86,12 +86,13 @@ type CommitStateDB struct {
 // CONTRACT: Stores used for state must be cache-wrapped as the ordering of the
 // key/value space matters in determining the merkle root.
 func NewCommitStateDB(
-	ctx sdk.Context, codeKey, storeKey sdk.StoreKey, ak AccountKeeper, bk BankKeeper, logsize uint,
+	ctx sdk.Context, codeKey, blockKey, storeKey sdk.StoreKey, ak AccountKeeper, bk BankKeeper,
 ) *CommitStateDB {
 
 	csdb := &CommitStateDB{
 		ctx:               ctx,
 		codeKey:           codeKey,
+		blockKey:          blockKey,
 		storeKey:          storeKey,
 		accountKeeper:     ak,
 		bankKeeper:        bk,
@@ -100,7 +101,6 @@ func NewCommitStateDB(
 		logs:              make(map[ethcmn.Hash][]*ethtypes.Log),
 		preimages:         make(map[ethcmn.Hash][]byte),
 		journal:           newJournal(),
-		logSize:           logsize,
 	}
 	return csdb
 }
@@ -186,13 +186,51 @@ func (csdb *CommitStateDB) SetLogs(hash ethcmn.Hash, logs []*ethtypes.Log) error
 	return nil
 }
 
+// AllLogs returns all the current logs in the state.
+// func (csdb *CommitStateDB) AllLogs() []*ethtypes.Log {
+// 	store := csdb.ctx.KVStore(csdb.storeKey)
+// 	iterator := sdk.KVStorePrefixIterator(store, KeyPrefixLogs)
+// 	defer iterator.Close()
+//
+// 	allLogs := []*ethtypes.Log{}
+// 	for ; iterator.Valid(); iterator.Next() {
+// 		var logs []*ethtypes.Log
+// 		ModuleCdc.MustUnmarshalBinaryLengthPrefixed(iterator.Value(), &logs)
+// 		allLogs = append(allLogs, logs...)
+// 	}
+//
+// 	return allLogs
+// }
+
+func (csdb *CommitStateDB) AllTransactionLogs(ctx sdk.Context) []*ethtypes.Log {
+
+	store := ctx.KVStore(csdb.blockKey)
+	iterator := sdk.KVStorePrefixIterator(store, logsPrefix)
+	defer iterator.Close()
+
+	allLogs := []*ethtypes.Log{}
+	for ; iterator.Valid(); iterator.Next() {
+		//logs := types.DecodeLogs(iterator.Value())
+		var logs []*ethtypes.Log
+		ModuleCdc.MustUnmarshalBinaryLengthPrefixed(iterator.Value(), &logs)
+		allLogs = append(allLogs, logs...)
+	}
+
+	return allLogs
+}
+
 // AddLog adds a new log to the state and sets the log metadata from the state.
 func (csdb *CommitStateDB) AddLog(log *ethtypes.Log) {
 	csdb.journal.append(addLogChange{txhash: csdb.thash})
 
+	if csdb.logSize == 0 {
+		csdb.logSize = uint(len(csdb.AllTransactionLogs(csdb.ctx)))
+		csdb.ctx.Logger().Info("AddLog", "hash", csdb.thash.String(), "csdb.logSize == 0 db size", csdb.logSize)
+	}
 	log.TxHash = csdb.thash
 	log.BlockHash = csdb.bhash
 	log.TxIndex = uint(csdb.txIndex)
+
 	log.Index = csdb.logSize
 	csdb.logs[csdb.thash] = append(csdb.logs[csdb.thash], log)
 	csdb.logSize++
