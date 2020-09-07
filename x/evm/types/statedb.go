@@ -202,21 +202,22 @@ func (csdb *CommitStateDB) SetLogs(hash ethcmn.Hash, logs []*ethtypes.Log) error
 // 	return allLogs
 // }
 
-func (csdb *CommitStateDB) AllTransactionLogs(ctx sdk.Context) []*ethtypes.Log {
+func (csdb *CommitStateDB) AllTransactionLogsNum(ctx sdk.Context) uint {
 
 	store := ctx.KVStore(csdb.blockKey)
-	iterator := sdk.KVStorePrefixIterator(store, logsPrefix)
+	iterator := sdk.KVStorePrefixIterator(store, nil)
 	defer iterator.Close()
 
-	allLogs := []*ethtypes.Log{}
+	i := uint(0)
 	for ; iterator.Valid(); iterator.Next() {
-		//logs := types.DecodeLogs(iterator.Value())
-		var logs []*ethtypes.Log
-		ModuleCdc.MustUnmarshalBinaryLengthPrefixed(iterator.Value(), &logs)
-		allLogs = append(allLogs, logs...)
+		logs, err := DecodeLogs(iterator.Value())
+		if err != nil {
+			panic(err)
+		}
+		i = i + uint(len(logs))
 	}
 
-	return allLogs
+	return i
 }
 
 // AddLog adds a new log to the state and sets the log metadata from the state.
@@ -224,7 +225,7 @@ func (csdb *CommitStateDB) AddLog(log *ethtypes.Log) {
 	csdb.journal.append(addLogChange{txhash: csdb.thash})
 
 	if csdb.logSize == 0 {
-		csdb.logSize = uint(len(csdb.AllTransactionLogs(csdb.ctx)))
+		csdb.logSize = csdb.AllTransactionLogsNum(csdb.ctx)
 		csdb.ctx.Logger().Info("AddLog", "hash", csdb.thash.String(), "csdb.logSize == 0 db size", csdb.logSize)
 	}
 	log.TxHash = csdb.thash
