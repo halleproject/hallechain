@@ -102,7 +102,7 @@ func NewCommitStateDB(
 		journal:           newJournal(),
 	}
 
-	csdb.logSize = len(csdb.AllLogs())
+	csdb.logSize = uint(len(csdb.AllLogs()))
 
 	return csdb
 }
