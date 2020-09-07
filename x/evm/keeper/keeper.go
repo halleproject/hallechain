@@ -110,6 +110,8 @@ func (k *Keeper) SetTransactionLogs(ctx sdk.Context, logs []*ethtypes.Log, hash 
 		return err
 	}
 
+	ctx.Logger().Info("SetTransactionLogs", "hash", fmt.Sprintf("%x", hash), "key", fmt.Sprintf("%x", types.LogsKey(hash)), "encLogs", fmt.Sprintf("%x", encLogs))
+
 	store.Set(types.LogsKey(hash), encLogs)
 	return nil
 }

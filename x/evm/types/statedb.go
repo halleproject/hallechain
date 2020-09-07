@@ -210,6 +210,9 @@ func (csdb *CommitStateDB) AllTransactionLogsNum(ctx sdk.Context) uint {
 
 	i := uint(0)
 	for ; iterator.Valid(); iterator.Next() {
+
+		ctx.Logger().Info("AllTransactionLogsNum", "key", fmt.Sprintf("%x", iterator.Key()), "encLogs", fmt.Sprintf("%x", iterator.Value()))
+
 		logs, err := DecodeLogs(iterator.Value())
 		if err != nil {
 			panic(err)
