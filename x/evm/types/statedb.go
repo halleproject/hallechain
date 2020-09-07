@@ -88,7 +88,8 @@ type CommitStateDB struct {
 func NewCommitStateDB(
 	ctx sdk.Context, codeKey, storeKey sdk.StoreKey, ak AccountKeeper, bk BankKeeper,
 ) *CommitStateDB {
-	return &CommitStateDB{
+
+	csdb := &CommitStateDB{
 		ctx:               ctx,
 		codeKey:           codeKey,
 		storeKey:          storeKey,
@@ -100,6 +101,10 @@ func NewCommitStateDB(
 		preimages:         make(map[ethcmn.Hash][]byte),
 		journal:           newJournal(),
 	}
+
+	csdb.logSize = len(csdb.AllLogs())
+
+	return csdb
 }
 
 // WithContext returns a Database with an updated sdk context
