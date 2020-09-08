@@ -82,6 +82,19 @@ func handleMsgEthereumTx(ctx sdk.Context, k Keeper, msg types.MsgEthereumTx) (*s
 	k.CommitStateDB.Prepare(ethHash, common.Hash{}, k.TxCount)
 	k.TxCount++
 
+	if k.CommitStateDB.GetLogSize() == 0 {
+		alllogs := k.AllTransactionLogs(ctx)
+
+		getAllLogsAsJson, err := json.Marshal(alllogs)
+		if err != nil {
+			ctx.Logger().Error("getAllLogsAsJson", "err", err.Error())
+		}
+
+		ctx.Logger().Info("getAllLogsAsJson", "all logs len", len(alllogs), "json output", getAllLogsAsJson)
+
+		k.CommitStateDB.SetLogSize(uint(len(alllogs)))
+	}
+
 	// TODO: move to keeper
 	executionResult, err := st.TransitionDb(ctx)
 	if err != nil {
@@ -96,15 +109,6 @@ func handleMsgEthereumTx(ctx sdk.Context, k Keeper, msg types.MsgEthereumTx) (*s
 	// if err != nil {
 	// 	return nil, err
 	//
-
-	alllogs := k.AllTransactionLogs(ctx)
-
-	getAllLogsAsJson, err := json.Marshal(alllogs)
-	if err != nil {
-		ctx.Logger().Error("getAllLogsAsJson", "err", err.Error())
-	}
-
-	ctx.Logger().Info("getAllLogsAsJson", "all logs len", len(alllogs), "json output", getAllLogsAsJson)
 
 	logsInputAsJson, err := json.Marshal(executionResult.Logs)
 	if err != nil {

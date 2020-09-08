@@ -244,14 +244,22 @@ func (csdb *CommitStateDB) AllTransactionLogsNum(ctx sdk.Context) uint {
 	return i
 }
 
+func (csdb *CommitStateDB) GetLogSize() uint {
+	return csdb.logSize
+}
+
+func (csdb *CommitStateDB) SetLogSize(size uint) {
+	csdb.logSize = size
+}
+
 // AddLog adds a new log to the state and sets the log metadata from the state.
 func (csdb *CommitStateDB) AddLog(log *ethtypes.Log) {
 	csdb.journal.append(addLogChange{txhash: csdb.thash})
 
-	if csdb.logSize == 0 {
-		csdb.logSize = csdb.AllTransactionLogsNum(csdb.ctx)
-		csdb.ctx.Logger().Info("AddLog", "hash", csdb.thash.String(), "csdb.logSize == 0 db size", csdb.logSize)
-	}
+	// if csdb.logSize == 0 {
+	// 	csdb.logSize = csdb.AllTransactionLogsNum(csdb.ctx)
+	// 	csdb.ctx.Logger().Info("AddLog", "hash", csdb.thash.String(), "csdb.logSize == 0 db size", csdb.logSize)
+	// }
 	log.TxHash = csdb.thash
 	log.BlockHash = csdb.bhash
 	log.TxIndex = uint(csdb.txIndex)
