@@ -1,6 +1,7 @@
 package evm
 
 import (
+	"encoding/json"
 	"math/big"
 
 	"github.com/ethereum/go-ethereum/common"
@@ -85,6 +86,9 @@ func handleMsgEthereumTx(ctx sdk.Context, k Keeper, msg types.MsgEthereumTx) (*s
 	if err != nil {
 		return nil, err
 	}
+
+	logsInputAsJson, _ := json.Marshal(executionResult.Logs)
+	ctx.Logger().Info("execution result", "json input", logsInputAsJson)
 
 	// update block bloom filter
 	k.Bloom.Or(k.Bloom, executionResult.Bloom)
