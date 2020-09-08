@@ -201,6 +201,27 @@ func (csdb *CommitStateDB) SetLogs(hash ethcmn.Hash, logs []*ethtypes.Log) error
 //
 // 	return allLogs
 // }
+//
+// func (csdb *CommitStateDB) AllTransactionLogsNum(ctx sdk.Context) uint {
+//
+// 	store := ctx.KVStore(csdb.blockKey)
+// 	iterator := sdk.KVStorePrefixIterator(store, nil)
+// 	defer iterator.Close()
+//
+// 	i := uint(0)
+// 	for ; iterator.Valid(); iterator.Next() {
+//
+// 		ctx.Logger().Info("AllTransactionLogsNum", "key", fmt.Sprintf("%x", iterator.Key()), "encLogs", fmt.Sprintf("%x", iterator.Value()))
+//
+// 		logs, err := DecodeLogs(iterator.Value())
+// 		if err != nil {
+// 			panic(err)
+// 		}
+// 		i = i + uint(len(logs))
+// 	}
+//
+// 	return i
+// }
 
 func (csdb *CommitStateDB) AllTransactionLogsNum(ctx sdk.Context) uint {
 
@@ -215,7 +236,7 @@ func (csdb *CommitStateDB) AllTransactionLogsNum(ctx sdk.Context) uint {
 
 		logs, err := DecodeLogs(iterator.Value())
 		if err != nil {
-			panic(err)
+			ctx.Logger().Error("AllTransactionLogsNum", "err", err.Error())
 		}
 		i = i + uint(len(logs))
 	}

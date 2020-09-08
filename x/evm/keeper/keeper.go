@@ -135,26 +135,16 @@ func (k *Keeper) AllTransactionLogs(ctx sdk.Context) []*ethtypes.Log {
 
 	allLogs := []*ethtypes.Log{}
 	for ; iterator.Valid(); iterator.Next() {
-		//logs := types.DecodeLogs(iterator.Value())
-		var logs []*ethtypes.Log
-		k.cdc.MustUnmarshalBinaryLengthPrefixed(iterator.Value(), &logs)
+		logs, err := types.DecodeLogs(iterator.Value())
+		if err != nil {
+			ctx.Logger().Error("types.DecodeLogs", "err", err.Error())
+		}
+		// var logs []*ethtypes.Log
+		// k.cdc.MustUnmarshalBinaryLengthPrefixed(iterator.Value(), &logs)
 		allLogs = append(allLogs, logs...)
 	}
 
 	return allLogs
-
-	// store := csdb.ctx.KVStore(csdb.storeKey)
-	// iterator := sdk.KVStorePrefixIterator(store, KeyPrefixLogs)
-	// defer iterator.Close()
-	//
-	// allLogs := []*ethtypes.Log{}
-	// for ; iterator.Valid(); iterator.Next() {
-	// 	var logs []*ethtypes.Log
-	// 	ModuleCdc.MustUnmarshalBinaryLengthPrefixed(iterator.Value(), &logs)
-	// 	allLogs = append(allLogs, logs...)
-	// }
-	//
-	// return allLogs
 }
 
 // ----------------------------------------------------------------------------

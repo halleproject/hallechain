@@ -95,7 +95,16 @@ func handleMsgEthereumTx(ctx sdk.Context, k Keeper, msg types.MsgEthereumTx) (*s
 	// err = k.SetTransactionLogs(ctx, executionResult.Logs, txHash)
 	// if err != nil {
 	// 	return nil, err
-	// }
+	//
+
+	alllogs := k.AllTransactionLogs(ctx)
+
+	getAllLogsAsJson, err := json.Marshal(alllogs)
+	if err != nil {
+		ctx.Logger().Error("getAllLogsAsJson", "err", err.Error())
+	}
+
+	ctx.Logger().Info("getAllLogsAsJson", "json output", getAllLogsAsJson)
 
 	logsInputAsJson, err := json.Marshal(executionResult.Logs)
 	if err != nil {
