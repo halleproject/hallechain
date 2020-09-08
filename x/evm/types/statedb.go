@@ -182,7 +182,8 @@ func (csdb *CommitStateDB) AddLog(log *ethtypes.Log) {
 	log.TxHash = csdb.thash
 	log.BlockHash = csdb.bhash
 	log.TxIndex = uint(csdb.txIndex)
-	log.Index = csdb.logSize
+	//log.Index = csdb.logSize
+	log.Index = uint(len(csdb.logs[csdb.thash]))
 	csdb.logs[csdb.thash] = append(csdb.logs[csdb.thash], log)
 	csdb.logSize++
 }
