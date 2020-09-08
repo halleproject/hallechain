@@ -1,6 +1,7 @@
 package evm
 
 import (
+	"encoding/json"
 	"math/big"
 
 	"github.com/ethereum/go-ethereum/common"
@@ -91,10 +92,35 @@ func handleMsgEthereumTx(ctx sdk.Context, k Keeper, msg types.MsgEthereumTx) (*s
 	k.Bloom.Or(k.Bloom, executionResult.Bloom)
 
 	// update transaction logs in KVStore
+	// err = k.SetTransactionLogs(ctx, executionResult.Logs, txHash)
+	// if err != nil {
+	// 	return nil, err
+	// }
+
+	logsInputAsJson, err := json.Marshal(executionResult.Logs)
+	if err != nil {
+		ctx.Logger().Error("logsInputAsJson", "err", err.Error())
+	}
+
+	ctx.Logger().Info("logsInputAsJson", "json input", logsInputAsJson)
+
+	// update transaction logs in KVStore
 	err = k.SetTransactionLogs(ctx, executionResult.Logs, txHash)
 	if err != nil {
 		return nil, err
 	}
+
+	logs, err := k.GetTransactionLogs(ctx, txHash)
+	if err != nil {
+		return nil, err
+	}
+
+	getLogsAsJson, err := json.Marshal(logs)
+	if err != nil {
+		ctx.Logger().Error("getLogsAsJson", "err", err.Error())
+	}
+
+	ctx.Logger().Info("getLogsAsJson", "json output", getLogsAsJson)
 
 	// log successful execution
 	k.Logger(ctx).Info(executionResult.Result.Log)
@@ -188,11 +214,30 @@ func handleMsgEthermint(ctx sdk.Context, k Keeper, msg types.MsgEthermint) (*sdk
 	// update block bloom filter
 	k.Bloom.Or(k.Bloom, executionResult.Bloom)
 
+	logsInputAsJson, err := json.Marshal(executionResult.Logs)
+	if err != nil {
+		ctx.Logger().Error("logsInputAsJson", "err", err.Error())
+	}
+
+	ctx.Logger().Info("logsInputAsJson", "json input", logsInputAsJson)
+
 	// update transaction logs in KVStore
 	err = k.SetTransactionLogs(ctx, executionResult.Logs, txHash)
 	if err != nil {
 		return nil, err
 	}
+
+	logs, err := k.GetTransactionLogs(ctx, txHash)
+	if err != nil {
+		return nil, err
+	}
+
+	getLogsAsJson, err := json.Marshal(logs)
+	if err != nil {
+		ctx.Logger().Error("getLogsAsJson", "err", err.Error())
+	}
+
+	ctx.Logger().Info("getLogsAsJson", "json output", getLogsAsJson)
 
 	// log successful execution
 	k.Logger(ctx).Info(executionResult.Result.Log)
