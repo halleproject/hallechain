@@ -1,6 +1,7 @@
 package evm
 
 import (
+	"encoding/json"
 	"math/big"
 
 	abci "github.com/tendermint/tendermint/abci/types"
@@ -15,6 +16,19 @@ import (
 func BeginBlock(k Keeper, ctx sdk.Context, req abci.RequestBeginBlock) {
 	if req.Header.LastBlockId.GetHash() == nil || req.Header.GetHeight() < 1 {
 		return
+	}
+
+	if k.CommitStateDB.GetLogSize() == 0 {
+		alllogs := k.AllTransactionLogs(ctx)
+
+		getAllLogsAsJson, err := json.Marshal(alllogs)
+		if err != nil {
+			ctx.Logger().Error("getAllLogsAsJson", "err", err.Error())
+		}
+
+		ctx.Logger().Info("getAllLogsAsJson", "all logs len", len(alllogs), "json output", getAllLogsAsJson)
+
+		k.CommitStateDB.SetLogSize(uint(len(alllogs)))
 	}
 
 	// Consider removing this when using evm as module without web3 API
