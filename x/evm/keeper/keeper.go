@@ -130,7 +130,7 @@ func (k *Keeper) GetTransactionLogs(ctx sdk.Context, hash []byte) ([]*ethtypes.L
 func (k *Keeper) AllTransactionLogs(ctx sdk.Context) []*ethtypes.Log {
 
 	store := ctx.KVStore(k.blockKey)
-	iterator := sdk.KVStorePrefixIterator(store, nil)
+	iterator := sdk.KVStorePrefixIterator(store, types.LogsKey(nil))
 	defer iterator.Close()
 
 	allLogs := []*ethtypes.Log{}
