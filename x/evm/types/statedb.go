@@ -175,6 +175,10 @@ func (csdb *CommitStateDB) SetLogs(hash ethcmn.Hash, logs []*ethtypes.Log) error
 	return nil
 }
 
+func (csdb *CommitStateDB) SetLogSize(s uint) {
+	csdb.logSize = s
+}
+
 // AddLog adds a new log to the state and sets the log metadata from the state.
 func (csdb *CommitStateDB) AddLog(log *ethtypes.Log) {
 	csdb.journal.append(addLogChange{txhash: csdb.thash})
