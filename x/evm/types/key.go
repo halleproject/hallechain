@@ -12,7 +12,8 @@ const (
 	BlockKey = ModuleName + "block"
 
 	// RouterKey uses module name for routing
-	RouterKey = ModuleName
+	RouterKey          = ModuleName
+	EnableResetLogSize = ModuleName + "resetlogsize"
 )
 
 var bloomPrefix = []byte("bloom")

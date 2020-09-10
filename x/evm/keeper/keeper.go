@@ -140,6 +140,10 @@ func (k *Keeper) CreateGenesisAccount(ctx sdk.Context, account types.GenesisAcco
 // Setters
 // ----------------------------------------------------------------------------
 
+func (k *Keeper) EnableResetLogSize(ctx sdk.Context) {
+	k.CommitStateDB.WithContext(ctx).EnableResetLogSize()
+}
+
 // SetBalance calls CommitStateDB.SetBalance using the passed in context
 func (k *Keeper) SetBalance(ctx sdk.Context, addr ethcmn.Address, amount *big.Int) {
 	k.CommitStateDB.WithContext(ctx).SetBalance(addr, amount)
@@ -252,6 +256,10 @@ func (k *Keeper) AllLogs(ctx sdk.Context) []*ethtypes.Log {
 // GetRefund calls CommitStateDB.GetRefund using the passed in context
 func (k *Keeper) GetRefund(ctx sdk.Context) uint64 {
 	return k.CommitStateDB.WithContext(ctx).GetRefund()
+}
+
+func (k *Keeper) GetResetLogSizeStatus(ctx sdk.Context) bool {
+	return k.CommitStateDB.WithContext(ctx).GetResetLogSizeStatus()
 }
 
 // Preimages calls CommitStateDB.Preimages using the passed in context

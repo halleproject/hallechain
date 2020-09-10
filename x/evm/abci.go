@@ -17,8 +17,9 @@ func BeginBlock(k Keeper, ctx sdk.Context, req abci.RequestBeginBlock) {
 		return
 	}
 
-	k.CommitStateDB.SetLogSize(0)
-
+	if k.GetResetLogSizeStatus(ctx) {
+		k.CommitStateDB.SetLogSize(0)
+	}
 	// Consider removing this when using evm as module without web3 API
 	bloom := ethtypes.BytesToBloom(k.Bloom.Bytes())
 	k.SetBlockBloomMapping(ctx, bloom, req.Header.GetHeight()-1)
