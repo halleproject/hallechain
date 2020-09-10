@@ -1,6 +1,7 @@
 package types
 
 import (
+	"encoding/json"
 	"fmt"
 	"math/big"
 	"sort"
@@ -77,6 +78,8 @@ type CommitStateDB struct {
 
 	// mutex for state deep copying
 	lock sync.Mutex
+
+	enableResetLogSize bool
 }
 
 // NewCommitStateDB returns a reference to a newly initialized CommitStateDB
@@ -177,6 +180,34 @@ func (csdb *CommitStateDB) SetLogs(hash ethcmn.Hash, logs []*ethtypes.Log) error
 
 func (csdb *CommitStateDB) SetLogSize(s uint) {
 	csdb.logSize = s
+}
+
+func (csdb *CommitStateDB) EnableResetLogSize() {
+	store := csdb.ctx.KVStore(csdb.storeKey)
+
+	enableAsJson, _ := json.Marshal(true)
+	store.Set([]byte(EnableResetLogSize), enableAsJson)
+}
+
+func (csdb *CommitStateDB) GetResetLogSizeStatus() bool {
+	if csdb.enableResetLogSize {
+		return true
+	}
+
+	store := csdb.ctx.KVStore(csdb.storeKey)
+	enableAsJson := store.Get([]byte(EnableResetLogSize))
+
+	var enable bool
+	err := json.Unmarshal(enableAsJson, &enable)
+	if err != nil {
+		return false
+	}
+
+	if enable {
+		csdb.enableResetLogSize = true
+	}
+
+	return enable
 }
 
 // AddLog adds a new log to the state and sets the log metadata from the state.

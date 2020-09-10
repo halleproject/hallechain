@@ -27,7 +27,7 @@ import (
 	ethermintcodec "github.com/cosmos/ethermint/codec"
 
 	"github.com/cosmos/cosmos-sdk/x/upgrade"
-  upgradeclient "github.com/cosmos/cosmos-sdk/x/upgrade/client"
+	upgradeclient "github.com/cosmos/cosmos-sdk/x/upgrade/client"
 
 	"github.com/cosmos/ethermint/app/ante"
 	eminttypes "github.com/cosmos/ethermint/types"
@@ -216,10 +216,10 @@ func NewEthermintApp(
 
 	app.upgradeKeeper = upgrade.NewKeeper(skipUpgradeHeights, keys[upgrade.StoreKey], appCodec, homePath)
 
-	// app.upgradeKeeper.SetUpgradeHandler("test", func(ctx sdk.Context, plan upgrade.Plan) {
-	// 		ctx.Logger().Info("upgrade ","handler_key","test","plan_name",plan.Name)
-	// })
-
+	app.upgradeKeeper.SetUpgradeHandler("enableResetLogsize", func(ctx sdk.Context, plan upgrade.Plan) {
+		ctx.Logger().Info("upgrade ", "handler_key", "enableResetLogsize", "plan_name", plan.Name, "height", ctx.BlockHeight())
+		app.EvmKeeper.EnableResetLogSize(ctx)
+	})
 
 	// create evidence keeper with router
 	evidenceKeeper := evidence.NewKeeper(
@@ -273,7 +273,6 @@ func NewEthermintApp(
 		upgrade.ModuleName, evm.ModuleName, mint.ModuleName, distr.ModuleName, slashing.ModuleName,
 		evidence.ModuleName,
 	)
-
 
 	app.mm.SetOrderEndBlockers(
 		escrow.ModuleName, evm.ModuleName, crisis.ModuleName, gov.ModuleName, staking.ModuleName,
