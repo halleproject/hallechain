@@ -6,7 +6,7 @@ then
 
 	sleep 5
 
-        ./hallecli rest-server --laddr tcp://0.0.0.0:8545 --unlock-key mykey0 --chain-id 200812 --trace --home clicfg/ --unsafe-cors=true &
+  ./hallecli rest-server --laddr tcp://0.0.0.0:8545 --unlock-key mykey0 --chain-id 200812 --trace --home clicfg/ --unsafe-cors=true &
   tail -f /dev/null
 
 	fi

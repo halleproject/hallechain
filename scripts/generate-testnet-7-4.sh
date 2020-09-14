@@ -22,27 +22,27 @@ halled init node8 --chain-id 200812 --home testnet/node8
 halled init node9 --chain-id 200812 --home testnet/node9
 halled init node10 --chain-id 200812 --home testnet/node10
 
-os=`uname -a`
-mac='Darwin'
-if [[ $os =~ $mac ]];then
-
-  sed -i ''  's/"max_gas": "-1"/"max_gas": "1000000000"/g'   testnet/node0/config/genesis.json
-  sed -i ''  's/"max_gas": "-1"/"max_gas": "1000000000"/g'   testnet/node1/config/genesis.json
-  sed -i ''  's/"max_gas": "-1"/"max_gas": "1000000000"/g'   testnet/node2/config/genesis.json
-  sed -i ''  's/"max_gas": "-1"/"max_gas": "1000000000"/g'   testnet/node3/config/genesis.json
-  sed -i ''  's/"max_gas": "-1"/"max_gas": "1000000000"/g'   testnet/node4/config/genesis.json
-  sed -i ''  's/"max_gas": "-1"/"max_gas": "1000000000"/g'   testnet/node5/config/genesis.json
-  sed -i ''  's/"max_gas": "-1"/"max_gas": "1000000000"/g'   testnet/node6/config/genesis.json
-
-else
-  sed -i   's/"max_gas": "-1"/"max_gas": "1000000000"/g'   testnet/node0/config/genesis.json
-  sed -i   's/"max_gas": "-1"/"max_gas": "1000000000"/g'   testnet/node1/config/genesis.json
-  sed -i   's/"max_gas": "-1"/"max_gas": "1000000000"/g'   testnet/node2/config/genesis.json
-  sed -i   's/"max_gas": "-1"/"max_gas": "1000000000"/g'   testnet/node3/config/genesis.json
-  sed -i   's/"max_gas": "-1"/"max_gas": "1000000000"/g'   testnet/node4/config/genesis.json
-  sed -i   's/"max_gas": "-1"/"max_gas": "1000000000"/g'   testnet/node5/config/genesis.json
-  sed -i   's/"max_gas": "-1"/"max_gas": "1000000000"/g'   testnet/node6/config/genesis.json
-fi
+# os=`uname -a`
+# mac='Darwin'
+# if [[ $os =~ $mac ]];then
+#
+#   sed -i ''  's/"max_gas": "-1"/"max_gas": "1000000000"/g'   testnet/node0/config/genesis.json
+#   sed -i ''  's/"max_gas": "-1"/"max_gas": "1000000000"/g'   testnet/node1/config/genesis.json
+#   sed -i ''  's/"max_gas": "-1"/"max_gas": "1000000000"/g'   testnet/node2/config/genesis.json
+#   sed -i ''  's/"max_gas": "-1"/"max_gas": "1000000000"/g'   testnet/node3/config/genesis.json
+#   sed -i ''  's/"max_gas": "-1"/"max_gas": "1000000000"/g'   testnet/node4/config/genesis.json
+#   sed -i ''  's/"max_gas": "-1"/"max_gas": "1000000000"/g'   testnet/node5/config/genesis.json
+#   sed -i ''  's/"max_gas": "-1"/"max_gas": "1000000000"/g'   testnet/node6/config/genesis.json
+#
+# else
+#   sed -i   's/"max_gas": "-1"/"max_gas": "1000000000"/g'   testnet/node0/config/genesis.json
+#   sed -i   's/"max_gas": "-1"/"max_gas": "1000000000"/g'   testnet/node1/config/genesis.json
+#   sed -i   's/"max_gas": "-1"/"max_gas": "1000000000"/g'   testnet/node2/config/genesis.json
+#   sed -i   's/"max_gas": "-1"/"max_gas": "1000000000"/g'   testnet/node3/config/genesis.json
+#   sed -i   's/"max_gas": "-1"/"max_gas": "1000000000"/g'   testnet/node4/config/genesis.json
+#   sed -i   's/"max_gas": "-1"/"max_gas": "1000000000"/g'   testnet/node5/config/genesis.json
+#   sed -i   's/"max_gas": "-1"/"max_gas": "1000000000"/g'   testnet/node6/config/genesis.json
+# fi
 
 
 
@@ -108,8 +108,10 @@ os=`uname -a`
 mac='Darwin'
 if [[ $os =~ $mac ]];then
   sed -i ''  's/"max_gas": "-1"/"max_gas": "1000000000"/g'  testnet/node0/config/genesis.json
+  sed -i ''  's/"voting_period": "172800000000000"/"voting_period": "120000000000"/g'   testnet/node0/config/genesis.json
 else
   sed -i 's/"max_gas": "-1"/"max_gas": "1000000000"/g'  testnet/node0/config/genesis.json
+  sed -i 's/"voting_period": "172800000000000"/"voting_period": "120000000000"/g'   testnet/node0/config/genesis.json
 fi
 
 

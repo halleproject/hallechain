@@ -11,25 +11,13 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
+VERSION := $(shell echo $(shell git describe --tags))
 PACKAGES=$(shell go list ./... | grep -Ev 'vendor|importer|rpc/tester')
 COMMIT_HASH := $(shell git rev-parse --short HEAD)
 COMMIT_SHA1=`git rev-parse HEAD`
-BUILD_FLAGS = -tags netgo -ldflags "-X github.com/cosmos/ethermint/version.GitCommit=${COMMIT_HASH}  -X  github.com/cosmos/ethermint/version.VERSION=0.1.3 -X github.com/cosmos/ethermint/version.COMMIT_SHA1=${COMMIT_SHA1}   -X 'github.com/cosmos/ethermint/version.BUILD_TIME=`date`'  -X  'github.com/cosmos/ethermint/version.GO_VERSION=`go version`' -X 'github.com/cosmos/ethermint/version.GIT_BRANCH=`git symbolic-ref --short -q HEAD`' "
-DOCKER_TAG = unstable
-DOCKER_IMAGE = cosmos/ethermint
-ETHERMINT_DAEMON_BINARY = halled
-ETHERMINT_CLI_BINARY = hallecli
-GO_MOD=GO111MODULE=on
-BINDIR ?= $(GOPATH)/bin
-SIMAPP = github.com/cosmos/ethermint/app
-RUNSIM = $(BINDIR)/runsim
-
-
-
+BUILD_FLAGS = -tags netgo -ldflags "-X github.com/cosmos/ethermint/version.GitCommit=${COMMIT_HASH}  -X  github.com/cosmos/ethermint/version.VERSION=${VERSION} -X github.com/cosmos/ethermint/version.COMMIT_SHA1=${COMMIT_SHA1}   -X 'github.com/cosmos/ethermint/version.BUILD_TIME=`date`'  -X  'github.com/cosmos/ethermint/version.GO_VERSION=`go version`' -X 'github.com/cosmos/ethermint/version.GIT_BRANCH=`git symbolic-ref --short -q HEAD`' "
 
 all: tools verify install
-
 #######################
 ### Build / Install ###
 #######################
