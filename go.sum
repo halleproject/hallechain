@@ -345,6 +345,8 @@ github.com/halleproject/cosmos-sdk v0.34.4-0.0.1 h1:LcibKvr3Q6d/wToVkJDnrS68jIPa
 github.com/halleproject/cosmos-sdk v0.34.4-0.0.1/go.mod h1:pKfvD4h7/CQoRawl6S6jLNw2cVcvSyfmUiC1KK2zQvw=
 github.com/halleproject/cosmos-sdk v0.34.4-0.1.0 h1:YZxWoZejUL6/x/c3+xGl+sqf7Y8uhg7lnWUEKFViJK0=
 github.com/halleproject/cosmos-sdk v0.34.4-0.1.0/go.mod h1:pKfvD4h7/CQoRawl6S6jLNw2cVcvSyfmUiC1KK2zQvw=
+github.com/halleproject/cosmos-sdk v0.34.4-0.1.12 h1:BmJl7OJvDFuTmjTYpetWgFcZTJ2xAWtTBW9uwNGDPCI=
+github.com/halleproject/cosmos-sdk v0.34.4-0.1.12/go.mod h1:pKfvD4h7/CQoRawl6S6jLNw2cVcvSyfmUiC1KK2zQvw=
 github.com/hashicorp/consul/api v1.1.0/go.mod h1:VmuI/Lkw1nC05EYQWNKwWGbkg+FbDBtguAZLlVdkD9Q=
 github.com/hashicorp/consul/api v1.3.0/go.mod h1:MmDNSzIMUjNpY/mQ398R4bk2FnqQLoPndWW5VkKPlCE=
 github.com/hashicorp/consul/sdk v0.1.1/go.mod h1:VKf9jXwCTEY1QZP2MOLRhb5i/I/ssyNV1vwHyQBF0x8=

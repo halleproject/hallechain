@@ -11,7 +11,7 @@ services:
     environment:
       - ID=0
       - LOG=${LOG:-halled.log}
-    entrypoint: "bash start.sh node0"
+    entrypoint: /bin/bash -c 'cd /home/ &&  ./start.sh  node0'
     networks:
       localnet:
         ipv4_address: 192.168.20.2
@@ -25,7 +25,7 @@ services:
     environment:
       - ID=1
       - LOG=${LOG:-halled.log}
-    entrypoint: "bash start.sh  node1"
+    entrypoint: /bin/bash -c 'cd /home/ &&  ./start.sh  node1'
     networks:
       localnet:
         ipv4_address: 192.168.20.3
@@ -39,7 +39,7 @@ services:
     environment:
       - ID=2
       - LOG=${LOG:-halled.log}
-    entrypoint: "bash start.sh node2"
+    entrypoint: /bin/bash -c 'cd /home/ &&  ./start.sh  node2'
     networks:
       localnet:
         ipv4_address: 192.168.20.4
@@ -53,7 +53,7 @@ services:
     environment:
       - ID=3
       - LOG=${LOG:-halled.log}
-    entrypoint: "bash start.sh node3"
+    entrypoint: /bin/bash -c 'cd /home/ &&  ./start.sh  node3'
     networks:
       localnet:
         ipv4_address: 192.168.20.5
@@ -67,7 +67,7 @@ services:
     environment:
       - ID=4
       - LOG=${LOG:-halled.log}
-    entrypoint: "bash start.sh node4"
+    entrypoint: /bin/bash -c 'cd /home/ &&  ./start.sh  node4'
     networks:
       localnet:
         ipv4_address: 192.168.20.6
@@ -81,7 +81,7 @@ services:
     environment:
       - ID=5
       - LOG=${LOG:-halled.log}
-    entrypoint: "bash start.sh node5"
+    entrypoint: /bin/bash -c 'cd /home/ &&  ./start.sh  node5'
     networks:
       localnet:
         ipv4_address: 192.168.20.7
@@ -95,7 +95,7 @@ services:
     environment:
       - ID=6
       - LOG=${LOG:-halled.log}
-    entrypoint: "bash start.sh node6"
+    entrypoint: /bin/bash -c 'cd /home/ &&  ./start.sh  node6'
     networks:
       localnet:
         ipv4_address: 192.168.20.8
@@ -109,7 +109,7 @@ services:
     environment:
       - ID=7
       - LOG=${LOG:-halled.log}
-    entrypoint: "bash start.sh node7"
+    entrypoint:  /bin/bash -c 'cd /home/ &&  ./start.sh  node7'
     networks:
       localnet:
         ipv4_address: 192.168.20.9
@@ -123,7 +123,7 @@ services:
     environment:
       - ID=8
       - LOG=${LOG:-halled.log}
-    entrypoint: "bash start.sh node8"
+    entrypoint:  /bin/bash -c 'cd /home/ &&  ./start.sh  node8'
     networks:
       localnet:
         ipv4_address: 192.168.20.10
@@ -137,7 +137,7 @@ services:
     environment:
       - ID=9
       - LOG=${LOG:-halled.log}
-    entrypoint: "bash start.sh node9"
+    entrypoint:  /bin/bash -c 'cd /home/ &&  ./start.sh  node9'
     networks:
       localnet:
         ipv4_address: 192.168.20.11
@@ -152,7 +152,7 @@ services:
     environment:
       - ID=10
       - LOG=${LOG:-halled.log}
-    entrypoint: "bash start.sh node10"
+    entrypoint:  /bin/bash -c 'cd /home/ &&  ./start.sh  node10'
     networks:
       localnet:
         ipv4_address: 192.168.20.12
