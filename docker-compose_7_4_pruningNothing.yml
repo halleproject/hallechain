@@ -1,4 +1,4 @@
-version: '2'
+version: '3'
 
 services:
   node0:
@@ -8,11 +8,13 @@ services:
     - "26001-26002:26656-26657"
     volumes:
     - ./build:/home
-    command: /bin/bash -c 'cd /home/ && ./halled start   --pruning=nothing   --minimum-gas-prices  5.0uhale   --home node0 --log_level "main:info,state:info,mempool:info"  --rpc.laddr "tcp://0.0.0.0:26657" >> node0.log'
+    environment:
+      - ID=0
+      - LOG=${LOG:-halled.log}
+    entrypoint: "bash start.sh node0"
     networks:
       localnet:
         ipv4_address: 192.168.20.2
-
   node1:
     container_name: node1
     image: ubuntu:16.04
@@ -20,11 +22,13 @@ services:
     - "26011-26012:26656-26657"
     volumes:
     - ./build:/home
-    command: /bin/bash -c 'cd /home/ && ./halled start  --pruning=nothing  --minimum-gas-prices  5.0uhale   --home node1 --log_level "main:info,state:info,mempool:info" >> node1.log '
+    environment:
+      - ID=1
+      - LOG=${LOG:-halled.log}
+    entrypoint: "bash start.sh  node1"
     networks:
       localnet:
         ipv4_address: 192.168.20.3
-
   node2:
     container_name: node2
     image: ubuntu:16.04
@@ -32,7 +36,10 @@ services:
     - "26021-26022:26656-26657"
     volumes:
     - ./build:/home
-    command: /bin/bash -c 'cd /home/ && ./halled start   --pruning=nothing  --minimum-gas-prices  5.0uhale   --home node2 --log_level "main:info,state:info,mempool:info" >> node2.log '
+    environment:
+      - ID=2
+      - LOG=${LOG:-halled.log}
+    entrypoint: "bash start.sh node2"
     networks:
       localnet:
         ipv4_address: 192.168.20.4
@@ -43,7 +50,10 @@ services:
     - "26031-26032:26656-26657"
     volumes:
     - ./build:/home
-    command: /bin/bash -c 'cd /home/ && ./halled start  --pruning=nothing   --minimum-gas-prices  5.0uhale   --home node3 --log_level info >> node3.log '
+    environment:
+      - ID=3
+      - LOG=${LOG:-halled.log}
+    entrypoint: "bash start.sh node3"
     networks:
       localnet:
         ipv4_address: 192.168.20.5
@@ -54,11 +64,13 @@ services:
     - "26041-26042:26656-26657"
     volumes:
     - ./build:/home
-    command: /bin/bash -c 'cd /home/ && ./halled start    --pruning=nothing --minimum-gas-prices  5.0uhale   --home node4 --log_level info  >> node4.log '
+    environment:
+      - ID=4
+      - LOG=${LOG:-halled.log}
+    entrypoint: "bash start.sh node4"
     networks:
       localnet:
         ipv4_address: 192.168.20.6
-
   node5:
     container_name: node5
     image: ubuntu:16.04
@@ -66,7 +78,10 @@ services:
     - "26051-26052:26656-26657"
     volumes:
     - ./build:/home
-    command: /bin/bash -c 'cd /home/ && ./halled start     --pruning=nothing    --minimum-gas-prices  5.0uhale   --home node5 --log_level info >> node5.log  '
+    environment:
+      - ID=5
+      - LOG=${LOG:-halled.log}
+    entrypoint: "bash start.sh node5"
     networks:
       localnet:
         ipv4_address: 192.168.20.7
@@ -77,7 +92,10 @@ services:
     - "26061-26062:26656-26657"
     volumes:
     - ./build:/home
-    command: /bin/bash -c 'cd /home/ && ./halled start    --pruning=nothing   --minimum-gas-prices  5.0uhale   --home node6 --log_level info >> node6.log '
+    environment:
+      - ID=6
+      - LOG=${LOG:-halled.log}
+    entrypoint: "bash start.sh node6"
     networks:
       localnet:
         ipv4_address: 192.168.20.8
@@ -88,7 +106,10 @@ services:
     - "26071-26072:26656-26657"
     volumes:
     - ./build:/home
-    command: /bin/bash -c 'cd /home/ && ./halled start   --pruning=nothing  --minimum-gas-prices  5.0uhale   --home node7 --log_level info  >> node7.log'
+    environment:
+      - ID=7
+      - LOG=${LOG:-halled.log}
+    entrypoint: "bash start.sh node7"
     networks:
       localnet:
         ipv4_address: 192.168.20.9
@@ -96,14 +117,45 @@ services:
     container_name: node8
     image: ubuntu:16.04
     ports:
+    - "26081-26082:26656-26657"
+    volumes:
+    - ./build:/home
+    environment:
+      - ID=8
+      - LOG=${LOG:-halled.log}
+    entrypoint: "bash start.sh node8"
+    networks:
+      localnet:
+        ipv4_address: 192.168.20.10
+  node9:
+    container_name: node9
+    image: ubuntu:16.04
+    ports:
+    - "26091-26092:26656-26657"
+    volumes:
+    - ./build:/home
+    environment:
+      - ID=9
+      - LOG=${LOG:-halled.log}
+    entrypoint: "bash start.sh node9"
+    networks:
+      localnet:
+        ipv4_address: 192.168.20.11
+  node10:
+    container_name: node10
+    image: ubuntu:16.04
+    ports:
     - "26656-26657:26656-26657"
     - "8545:8545"
     volumes:
     - ./build:/home
-    command: /bin/bash -c 'cd /home/ && ./halled start    --pruning=nothing  --minimum-gas-prices  5.0uhale   --home node8 --log_level "main:info,state:info,mempool:info"  --rpc.laddr "tcp://0.0.0.0:26657" >> node8.log '
+    environment:
+      - ID=10
+      - LOG=${LOG:-halled.log}
+    entrypoint: "bash start.sh node10"
     networks:
       localnet:
-        ipv4_address: 192.168.20.10
+        ipv4_address: 192.168.20.12
 
 networks:
   localnet:
