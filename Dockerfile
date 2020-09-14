@@ -2,7 +2,7 @@ FROM golang:alpine AS build-env
 
 # Set up dependencies
 ENV PACKAGES git build-base
-ENV GOPROXY https://mirrors.aliyun.com/goproxy/
+# ENV GOPROXY https://mirrors.aliyun.com/goproxy/
 
 
 ENV GOPATH /root/go
