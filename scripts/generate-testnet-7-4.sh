@@ -72,6 +72,9 @@ halled add-genesis-account $(hallecli keys show mykey7 -a) 100000000000000000000
 halled add-genesis-account $(hallecli keys show mykey8 -a) 10000000000000000000000000000uhale --home testnet/node0
 halled add-genesis-account $(hallecli keys show mykey9 -a) 10000000000000000000000000000uhale --home testnet/node0
 halled add-genesis-account $(hallecli keys show mykey10 -a) 10000000000000000000000000000uhale --home testnet/node0
+halled add-genesis-account halle1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqh9dg42 1uhale      --home testnet/node0   
+
+
 
 
 halled add-genesis-account $(hallecli keys show mykey1 -a) 10000000000000000000000000000uhale --home testnet/node1

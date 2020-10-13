@@ -6,10 +6,10 @@ ENV PACKAGES git build-base
 
 
 ENV GOPATH /root/go
-ENV REPO_PATH $GOPATH/src/github.com/landoyjx/ethermint
+ENV REPO_PATH $GOPATH/src/github.com/halleproject/hallechain
 ENV GO111MODULE on
-ENV  GONOSUMDB="github.com/cosmos/cosmos-sdk"
-ENV  GOSUMDB="off"
+# ENV  GONOSUMDB="github.com/cosmos/cosmos-sdk"
+# ENV  GOSUMDB="off"
 COPY . $REPO_PATH/
 WORKDIR $REPO_PATH
 
@@ -20,7 +20,7 @@ RUN mkdir -p $REPO_PATH/build && apk add --no-cache $PACKAGES   && make build
 FROM alpine
 
 ENV GOPATH /root/go
-ENV REPO_PATH $GOPATH/src/github.com/landoyjx/ethermint
+ENV REPO_PATH $GOPATH/src/github.com/halleproject/hallechain
 
 WORKDIR /usr/bin/
 
